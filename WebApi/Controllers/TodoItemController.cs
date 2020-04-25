@@ -2,7 +2,7 @@ using System;
 using Application;
 using Microsoft.AspNetCore.Mvc;
 
-public class TodoItemController: ControllerBase
+public class TodoItemController : ControllerBase
 {
     private readonly TodoListService _todoListService;
 

@@ -1,4 +1,7 @@
-public class TodoItemCreateModel
+namespace Application
 {
-    public string Name { get; set; }
+    public class TodoItemCreateModel
+    {
+        public string Name { get; set; }
+    }
 }

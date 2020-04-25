@@ -1,4 +1,7 @@
-public class TodoListCreateModel
+namespace Application
 {
-    public string Name { get; set; }
+    public class TodoListCreateModel
+    {
+        public string Name { get; set; }
+    }
 }

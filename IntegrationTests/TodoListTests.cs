@@ -17,41 +17,41 @@ namespace IntegrationTests
 
         [Fact]
         public async System.Threading.Tasks.Task CanCreateList()
-        {            
+        {
             var client = _factory.CreateClient();
 
             var name = Guid.NewGuid().ToString();
-            var createResp = await client.PostAsJsonAsync("todoList", new TodoListCreateModel{Name = name});
+            var createResp = await client.PostAsJsonAsync("todoList", new TodoListCreateModel { Name = name });
             var createdList = await createResp.Content.ReadAsAsync<TodoListViewModel>();
             var response = await client.GetAsync("todoList");
             var todoLists = await response.Content.ReadAsAsync<IEnumerable<TodoListViewModel>>();
-            
+
             Assert.Equal(name, todoLists.Single(t => t.Id == createdList.Id).Name);
         }
-        
+
         [Fact]
         public async System.Threading.Tasks.Task CanAddItemToList()
-        {            
+        {
             var client = _factory.CreateClient();
 
-            var createResp = await client.PostAsJsonAsync("todoList", new TodoListCreateModel{Name = "test"});
+            var createResp = await client.PostAsJsonAsync("todoList", new TodoListCreateModel { Name = "test" });
             var createdList = await createResp.Content.ReadAsAsync<TodoListViewModel>();
 
             var itemName = Guid.NewGuid().ToString();
-            await client.PostAsJsonAsync($"/todoList/{createdList.Id}/addItem", new TodoListItemViewModel{Name = itemName});
+            await client.PostAsJsonAsync($"/todoList/{createdList.Id}/addItem", new TodoListItemViewModel { Name = itemName });
 
             var response = await client.GetAsync("todoList");
             var todoLists = await response.Content.ReadAsAsync<IEnumerable<TodoListViewModel>>();
-            
+
             Assert.Equal(itemName, todoLists.Single(t => t.Id == createdList.Id).Items.Single(i => i.Name == itemName).Name);
         }
 
         [Fact]
         public async System.Threading.Tasks.Task CanRenameList()
-        {            
+        {
             var client = _factory.CreateClient();
 
-            var createResp = await client.PostAsJsonAsync("todoList", new TodoListCreateModel{Name = "test"});
+            var createResp = await client.PostAsJsonAsync("todoList", new TodoListCreateModel { Name = "test" });
             var createdList = await createResp.Content.ReadAsAsync<TodoListViewModel>();
 
             var newName = Guid.NewGuid().ToString();
@@ -59,7 +59,7 @@ namespace IntegrationTests
 
             var response = await client.GetAsync("todoList");
             var todoLists = await response.Content.ReadAsAsync<IEnumerable<TodoListViewModel>>();
-            
+
             Assert.Equal(newName, todoLists.Single(t => t.Id == createdList.Id).Name);
         }
     }
