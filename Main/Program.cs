@@ -4,18 +4,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi;
 
-namespace Main
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            Startup.Start(args, SetupDependecies);
-        }
+        Startup.Start(args, SetupDependecies);
+    }
 
-        private static void SetupDependecies(WebHostBuilderContext hostContext, IServiceCollection services)
-        {
-            services.AddTransient<TodoListService, TodoListService>();
-        }
+    public static void SetupDependecies(WebHostBuilderContext hostContext, IServiceCollection services)
+    {
+        services.AddTransient<TodoListService, TodoListService>();
+        services.AddTransient<ITodoListRepository, TodoListRepository>();
     }
 }

@@ -16,4 +16,10 @@ public class TodoController : ControllerBase
     {
         return _todoListService.GetAll();
     }
+
+    [HttpPost("/todoList")]
+    public void Add(TodoListCreateModel list)
+    {
+        _todoListService.Add(list);
+    }
 }

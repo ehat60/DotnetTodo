@@ -14,15 +14,24 @@ namespace WebApi
     {
         public static void Start(string[] args, Action<WebHostBuilderContext, IServiceCollection> configureServices)
         {
-             Host.CreateDefaultBuilder(args)
+             CreateWebHostBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {            
                     webBuilder.ConfigureServices(configureServices);
-                    webBuilder.UseStartup<Startup>();
                 })
                 .Build()
                 .Run();
         }
+
+        public static IHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {                              
+                    webBuilder.UseStartup<Startup>();
+                });
+        }
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)

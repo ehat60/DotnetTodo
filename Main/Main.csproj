@@ -4,6 +4,7 @@
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\WebApi\WebApi.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
