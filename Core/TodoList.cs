@@ -13,8 +13,8 @@ namespace Core
             Id = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
         public IEnumerable<TodoItem> Items => _items;
 
         public void AddItem(TodoItem item)
@@ -25,6 +25,21 @@ namespace Core
             }
 
             _items.Add(item);
+        }
+
+        public void ToggleItem(Guid itemId)
+        {
+            _items.Single(i => i.Id == itemId).Toggle();
+        }
+
+        public void Rename(string newName)
+        {
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                throw new ArgumentException("A todo list must have a name", nameof(newName));
+            }
+
+            Name = newName;
         }
     }
 }

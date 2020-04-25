@@ -14,6 +14,6 @@ public class Program
     public static void SetupDependecies(WebHostBuilderContext hostContext, IServiceCollection services)
     {
         services.AddTransient<TodoListService, TodoListService>();
-        services.AddTransient<ITodoListRepository, TodoListRepository>();
+        services.AddTransient<ITodoListRepository, InMemoryTodoListRepository>();
     }
 }
