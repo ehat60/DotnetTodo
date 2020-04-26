@@ -14,7 +14,7 @@ public class TodoItemController : ControllerBase
     /// <summary>
     /// Toggles an item
     /// </summary>
-    [HttpPost("/todoItem/toggle")]
+    [HttpPost("/todoItem/{id}/toggle")]
     public void Toggle(Guid id)
     {
         _todoListService.ToggleItem(id);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace IntegrationTests
@@ -33,9 +34,7 @@ namespace IntegrationTests
         public async System.Threading.Tasks.Task CanAddItemToList()
         {
             var client = _factory.CreateClient();
-
-            var createResp = await client.PostAsJsonAsync("todoList", new TodoListCreateModel { Name = "test" });
-            var createdList = await createResp.Content.ReadAsAsync<TodoListViewModel>();
+            var createdList = await CreateList(client);
 
             var itemName = Guid.NewGuid().ToString();
             await client.PostAsJsonAsync($"/todoList/{createdList.Id}/addItem", new TodoListItemViewModel { Name = itemName });
@@ -51,8 +50,7 @@ namespace IntegrationTests
         {
             var client = _factory.CreateClient();
 
-            var createResp = await client.PostAsJsonAsync("todoList", new TodoListCreateModel { Name = "test" });
-            var createdList = await createResp.Content.ReadAsAsync<TodoListViewModel>();
+            var createdList = await CreateList(client);
 
             var newName = Guid.NewGuid().ToString();
             await client.PutAsync($"/todoList/{createdList.Id}/rename?name={newName}", null);
@@ -61,6 +59,13 @@ namespace IntegrationTests
             var todoLists = await response.Content.ReadAsAsync<IEnumerable<TodoListViewModel>>();
 
             Assert.Equal(newName, todoLists.Single(t => t.Id == createdList.Id).Name);
+        }
+
+        private static async Task<TodoListViewModel> CreateList(HttpClient client)
+        {
+            var createResp = await client.PostAsJsonAsync("todoList", new TodoListCreateModel { Name = "test" });
+            var createdList = await createResp.Content.ReadAsAsync<TodoListViewModel>();
+            return createdList;
         }
     }
 
